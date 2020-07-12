@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Weather Report</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.css" />
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+</head>
+<body>
+  <section class="hero is-primary">
+    <div class="hero-body">
+        <div class="container">
+            <h1 class="title">
+                How is the weather now?
+            </h1>
+        </div>
+    </div>
+</section>
+
+<section class="section" id="mydata">
+    <div class="container">
+        <div class="columns">
+            <div class="column is-offset-4 is-4">
+              {% for city_weather in weather_data %}
+                <div class="box">
+                    
+                    <article class="media">
+                        <div class="media-left">
+                            <figure class="image is-50x50">
+                                <img src="http://openweathermap.org/img/w/{{city_weather.icon}}.png" alt="Image">
+                            </figure>
+                        </div>
+                        <div class="media-content">
+                            <div class="content">
+                                <p>
+                                    <span class="title">{{city_weather.city}}</span>
+                                    <br>
+                                    
+                                    <span class="subtitle">{{city_weather.temp}}° F</span>
+                                    
+                                    <br> {{city_weather.desc}}
+                                </p>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+              {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>
+<footer class="footer">
+</footer>
+    <!-- <script>
+        function reload(){
+            window.location.reload();
+        }
+        setTimeout(reload,10000);
+    </script> -->
+    <script>
+      (function worker() {
+
+        $.ajax({ url: "{% url 'indexView' %}",
+        
+        success: function(data) {
+        
+        $('body').html(data);
+        
+        }, complete: function() {
+            
+        
+        // Schedule the next request when the current one's complete 
+        setTimeout(worker, 10000);
+        
+        }
+        
+        });
+        
+        })();
+        
+            
+    </script>
+    <!-- <script>
+        $.ajax({
+            url: window.location,
+            success: function(data) {
+              if (data == "refresh"){
+                window.location.reload(); // This is not jQuery but simple plain ol' JS
+              }
+            }
+          });
+    </script> -->
+</body>
+</html>
