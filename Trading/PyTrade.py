@@ -31,6 +31,7 @@ def on_message(wb, message):
         c.execute("SELECT * FROM trade ORDER BY rowid DESC LIMIT 1;")
         print(c.fetchone())
         conn.commit()
+        print("commited testing")
 
 
 def on_open(wb):
