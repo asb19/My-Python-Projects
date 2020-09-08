@@ -4,7 +4,7 @@ import json
 import sqlite3
 import websocket
 
-access_token = "9XqqozitJ3RVHIrUMVgIWZ1UB_tKsW_WAuLHwCWwVjY.8pJyTf5vyIV8ymYSTkPZuTXP873qGsvghxckC8SpsmY"
+access_token = "BrOCKm1gDRX4TXl8kSkEwafx2SdrYZopFDRYiGbyEaA.0fsIRmgLkDh0Z1bwyn12VcseZOVsmCY_ljT_O_Z2Se4"
 conn = sqlite3.connect('./sqldata/trade-database.db')
 c = conn.cursor()
 c.execute("""CREATE TABLE IF NOT EXISTS trade (EXCHANGE_TIMESTAMP TEXT,LTP REAL)
