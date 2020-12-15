@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}
+Form page
+{% endblock %}
+
+{% block content %}
+<div class="row">
+  <div class="col-6">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">AITODO</h5>
+
+      </div>
+    </div>
+
+    <form class="card p-1" method="post">
+  <div class="form-group">
+      <div class="col-4">
+    <label>Database Name</label>
+    <input type="text" class="form-control" name="db">
+      </div>
+  </div>
+
+  <button type="submit" class="btn btn-primary btn-lg" value="submit" style="width: 100px;">Submit</button>
+    </form>
+  </div>
+
+{% endblock %}
