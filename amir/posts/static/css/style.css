@@ -1,0 +1,14 @@
+
+.thumbnail{
+    transition: transform 2s ease-in;
+}
+.thumbnail img :hover{
+    transform: scale(1.2);
+}
+body{
+    background:greenyellow!important;
+}
+h1{
+    color:orangered ;
+    font-family: 'Lobster';
+}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       

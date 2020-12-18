@@ -1,0 +1,1 @@
+web: gunicorn tutoria.wsgi

@@ -1,0 +1,84 @@
+<html>
+
+<head>
+
+    <title>QMTS</title>
+
+    <meta charset="utf-8">
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="MobileOptimized" content="320"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"
+          integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static 'css/topBarWithSearch.css' %}">
+
+    {% block extra_head %} {% endblock %}
+
+    <style type="text/css">
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="navbar fixed-top" id="topBar" style="box-shadow: 0px 6px 16px 0px rgba(0,0,0,0.2);">
+    <div class="container-fluid">
+
+        <div class="" style="float:left;">
+            <div class="" style="float:left;">
+                <a href="/mainApp/index" id="tutoriaClick"><h1 id="mainHeading">QMTS</h1></a>
+            </div>
+            <form class="form-inline" id="searchForm" action="/mainApp/search" method="post">
+                <input id="searchInput" name="givenName" class="form-control mr-sm-2" type="text" placeholder="Search by Tutor Name"
+                       aria-label="Search">
+                <button class="btn btn-info my-2 my-sm-0" type="submit">Search!</button>
+            </form>
+
+            <!--<button class="btn btn-info my-2 my-sm-0" href="search">Search</button>-->
+        </div>
+
+
+        <div class="" id="" style="float:right;">
+
+            <div class="dropdown">
+                <button class="" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                        aria-expanded="false">
+                    <img src="/static/assets/img/{{ user.avatar }}" id="avatarPic">
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="/mainApp/profile">My Profile</a>
+                    <a class="dropdown-item" href="/mainApp/bookings">My Bookings</a>
+                    <a class="dropdown-item" href="/mainApp/wallet">My Wallet</a>
+                    <a class="dropdown-item" href="/mainApp/index?logout=1">Log Out</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+{% block content %}
+{% endblock %}
+
+<script src="https://code.jquery.com/jquery-3.1.1.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"
+        integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb"
+        crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"
+        integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn"
+        crossorigin="anonymous"></script>
+
+{% block extra_script %}
+
+{% endblock %}
+
+</body>
+
+
+</html>
+
+

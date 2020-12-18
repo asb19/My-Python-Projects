@@ -1,0 +1,48 @@
+{% extends 'mainApp/topBarWithSearch.html' %}
+
+
+{% block extra_head %}
+<link rel="stylesheet" href="/static/css/common.css">
+<link rel="stylesheet" href="/static/css/confirmation.css">
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid" style="margin-top:115px; width:600px !important;">
+    <h3 class="centerAlign">Booking Confirmed!</h3>
+    <ul class="list-group" style="width:600px;">
+        <li class="list-group-item">
+            <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">Tutor: </h5>
+            </div>
+            <p class="mb-1"><br><img src="/static/assets/img/{{booking.tutor.user.avatar}}" id="tutorPic" alt=""><span style="margin-left:20px;"><strong>{{booking.tutor.user.name}}</strong></span>
+            </p>
+        </li>
+        <li class="list-group-item">
+            <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">Timeslot:</h5>
+            </div>
+            <p class="mb-1">{{booking.date}},</p>
+            <br>
+            <p class="mb-1">{{booking.time_start}}</p>
+        </li>
+        {% if booking.tutor.rate %}
+        <li class="list-group-item">
+            <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">Session Charges:</h5>
+            </div>
+            {% load custom_tags %}
+            <p class="mb-1">{{ charges }} HKD</p>
+        </li>
+        {% else %}
+            <li class="list-group-item">
+            <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">No charges (contracted tutor)</h5>
+            </div>
+        </li>
+        {% endif %}
+    </ul>
+    {% if booking.tutor.rate %}
+    <div class="alert alert-success" style="text-align: center; width: 600px;"><strong>The respective charges have been deducted from your wallet.</strong></div>
+    {% endif %}
+</div>
+{% endblock %}

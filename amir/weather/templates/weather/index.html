@@ -21,9 +21,17 @@
 
 <section class="section" id="mydata">
     <div class="container">
+        <form method = "POST" >
+            {% csrf_token %}
+            <label for="changeTemp">°C</label> 
+            <input type="checkbox" name="checktemp" id="check1" {% if checked %} checked='checked' {% endif %}>
+            
+            
+        </form> 
         <div class="columns">
             <div class="column is-offset-4 is-4">
               {% for city_weather in weather_data %}
+              
                 <div class="box">
                     
                     <article class="media">
@@ -37,8 +45,10 @@
                                 <p>
                                     <span class="title">{{city_weather.city}}</span>
                                     <br>
-                                    
-                                    <span class="subtitle">{{city_weather.temp}}° F</span>
+                                
+                                    <span class="subtitle">{{city_weather.temp}}</span>
+                                    <br>
+                                    <span class="subtitle" style="color:orangered;">Humidity: {{city_weather.humidity}}</span>
                                     
                                     <br> {{city_weather.desc}}
                                 </p>
@@ -60,6 +70,7 @@
         setTimeout(reload,10000);
     </script> -->
     <script>
+        
       (function worker() {
 
         $.ajax({ url: "{% url 'indexView' %}",
@@ -72,13 +83,28 @@
             
         
         // Schedule the next request when the current one's complete 
-        setTimeout(worker, 10000);
+        setTimeout(worker, 50000);
         
         }
         
         });
         
         })();
+        var token = '{{csrf_token}}';
+        
+        $(function(){
+            $('#check1').change(function(e){
+                
+                $.ajax({
+                    headers: { "X-CSRFToken": token },
+                    type:'POST',
+        url:"{% url 'checkView' %}",
+        dataType:'json',
+        data: $("#check1").serialize(),
+                    success: function(data){ console.log(data) }
+                });
+            });
+       });
         
             
     </script>

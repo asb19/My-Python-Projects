@@ -1,0 +1,18 @@
+{% extends 'wallpapers/base.html' %}
+{% block content %}
+hgjhh
+<div class="row">
+{% for item in lists %}
+
+    <div class="col-xs-6 col-md-3">
+      <a href="#" class="thumbnail">
+        <img src="{{item.image.url}}" alt="no image">
+      </a>
+    </div>
+    <!-- {% cycle ""  "</div><div class='row'>" %} -->
+
+
+    
+{% endfor %}
+</div>
+{%endblock%}

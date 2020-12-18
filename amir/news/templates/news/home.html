@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My news</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+<!-- Latest compiled and minified JavaScript -->
+</head>
+<body>
+    <h2>Welcome to my dashboard!</h2>
+    <form action="{% url 'scrape' %}" method="POST">
+        {% csrf_token %}
+        {% if hide_me %}
+        <p class="text-success">Your next scrape is in {{new_scrape}} hours</p>
+        {% else %}
+        
+        <button type="submit" class="btn btn-primary">Get your morning news</button>
+        {% endif %}
+    </form>
+    
+    <!-- <ul class="media-list">
+        {% for news in headlines %}
+        <li class="media">
+          <div class="media-left">
+            <a href="#">
+              <img class="media-object" src="{{news.image.url}}" alt="...">
+            </a>
+          </div>
+          <div class="media-body">
+           <a href="{{news.url}}"> <h4 class="media-heading">{{news.title}}</h4></a>
+            
+          </div>
+        </li>
+        {% endfor %}
+    </ul> -->
+    <div class="row">
+        {% for news in headlines %}
+        <div class="col-sm-6 col-md-4">
+          <div class="thumbnail">
+            <img src="{{news.image.url}}" alt="...">
+            <div class="caption">
+              <a href="{{news.url}}"><h3>{{news.title}}</h3></a>
+              
+              </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+</body>
+</html>

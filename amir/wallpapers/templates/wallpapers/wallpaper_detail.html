@@ -1,0 +1,8 @@
+{% extends 'wallpapers/base.html' %}
+
+<title>Wallpaper no {{item.id}}</title>
+
+{% block content %}
+<h2>{{item.title}}</h2>
+<img src="{{item.image.url}}" alt="">
+{% endblock %}

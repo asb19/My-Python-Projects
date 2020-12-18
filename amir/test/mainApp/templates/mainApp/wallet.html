@@ -1,0 +1,130 @@
+{% extends 'mainApp/topBarWithSearch.html' %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="/static/css/wallet.css">
+<link rel="stylesheet" href="/static/css/common.css">
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid" style="margin-top:115px; width:600px">
+
+    <div class="centerAlign">
+        <img src="/static/assets/img/wallet.png" id="walletPic" alt="">
+        <h1>My Wallet</h1>
+        <br>
+    </div>
+    <div class="alert alert-success" role="alert" id="success">
+
+    </div>
+    <div class="alert alert-info" role="alert" id="success">
+        Processing request...
+    </div>
+    <div class="alert alert-danger" role="alert" id="success" style="display: none;">
+        Illegal Withdrawal Amount.
+    </div>
+    <ul class="list-group" style="width:600px;">
+        <li class="list-group-item">
+            <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">Balance:</h5>
+            </div>
+            <span id="balance">{{ wallet.balance }} </span> <span>HKD</span>
+        </li>
+        {%if isTutor and isStudent %}
+        <a data-toggle="modal" data-target=".bd-example-modal-sm"
+           class="list-group-item list-group-item-action flex-column align-items-start" onclick="sub()">
+            <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">Withdraw Funds</h5>
+            </div>
+        </a>
+        <a data-toggle="modal" data-target=".bd-example-modal-sm"
+           class="list-group-item list-group-item-action flex-column align-items-start" onclick="add()">
+            <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">Add Funds</h5>
+            </div>
+        </a>
+        {% endif %}
+
+        {%if not isTutor and isStudent %}
+        <a data-toggle="modal" data-target=".bd-example-modal-sm"
+           class="list-group-item list-group-item-action flex-column align-items-start" onclick="add()">
+            <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">Add Funds</h5>
+            </div>
+        </a>
+        {% endif %}
+
+        {%if isTutor and not isStudent %}
+        <a data-toggle="modal" data-target=".bd-example-modal-sm"
+           class="list-group-item list-group-item-action flex-column align-items-start" onclick="add()">
+            <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">Add Funds</h5>
+            </div>
+        </a>
+        {% endif %}
+
+    </ul>
+
+</div>
+
+<div class="modal fade bd-example-modal-sm">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Enter Amount:</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <input id="amount" type="number" class="form-control" value=""
+                       placeholder="Amount">
+
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary" data-dismiss="modal" onclick="process()">Submit</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" >Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_script %}
+    <script type="text/javascript">
+        var action = "";
+        function add() {
+            action = "add";
+        }
+        function sub() {
+            action = "sub";
+        }
+        function process() {
+            if ($('#amount').val()>0) {
+                if (action=='sub' && (parseInt($('#balance').html())-parseInt($('#amount').val()))<0) {
+                    $('.alert-success').hide();
+                    $('.alert-info').hide();
+                    $('.alert-danger').show();
+                } else {
+                    $('.alert-danger').hide();
+                    $('.alert-success').hide();
+                    $('.alert-info').show();
+                    $.get('/mainApp/managewallet', {
+                        action: action,
+                        amount: $('#amount').val()
+                    }, function (response) {
+                        $('.alert-info').hide();
+                        $('.alert-success').show();
+                        if (action == "add") {
+                            $('.alert-success').html("Success! " + $('#amount').val() + " HKD have been added to your wallet!");
+                            $('#balance').html(response.balance);
+                        } else {
+                            $('.alert-success').html("Success! " + $('#amount').val() + " HKD have been withdrawn from your wallet!");
+                            $('#balance').html(response.balance);
+                        }
+
+                    });
+                }
+            }
+        }
+    </script>
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends 'posts/base.html' %}
+{% block content %}
+<form action="register" method="post">
+    {% csrf_token %}
+    <input type="text" name="username" id="" placeholder="username"><br>
+    <input type="text" name="first_name" id="" placeholder="first name"><br>
+    <input type="text" name="last_name" id="" placeholder="last name"><br>
+    <input type="email" name="email" id="" placeholder="email"><br>
+    <input type="password" name="password1" id="" placeholder="password"><br>
+    <input type="password" name="password2" id="" placeholder="confirm password"><br>
+    <input type="submit" value="submit">
+    {% for msg in messages %}
+    <h1>{{msg}}</h1>
+    {% endfor %}
+</form>
+
+{% endblock %}

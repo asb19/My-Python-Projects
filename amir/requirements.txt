@@ -1,18 +1,2 @@
-start a django project
-after basic setup
-(installing django and starting a project in my case project name amir)
-create a weather app
->python manage.py startapp weather
-add the app to the settings.py file in installed apps
->
-INSTALLED_APPS = [
- 	.....
-	.....
-	'weather'
-]
->created a model cityModel in models.py for storing city names
->urls.py created where the index url path opens the weather page
->database used is postgreSql
->used ajax for calling the view and periodically collect the data
->run
->>>python manage.py runserver
+Django>=3.0,<4.0
+psycopg2-binary>=2.8

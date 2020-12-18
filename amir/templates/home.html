@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <form action="enq" method="post">
+            {% csrf_token %}
+
+        <input type="text" name="name" id="">
+        <input type="number" name="age" id="">
+        <input type="submit" value="submit">
+    </form>
+</body>
+</html> -->
+
+{% block content%}
+<h2>hello {{name}}</h2>
+<form action="add">
+    Enter no.1: <input type="text" name="num1" id=""><br><br>
+    Enter no 2: <input type="text" name="num2" id=""><br>
+    <br>
+    <input type="submit" value="submit to add">
+</form>
+{% endblock %}

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>To Do App</title>
+</head>
+<body>
+    <h1>You can use our to-do app free for now....</h1>
+    {% if user.is_authenticated %}
+    <h3>{{user.username}}</h3>
+    <ul>
+        <li><a href="logout">logout</a></li>
+    </ul>
+    {% else %}
+    <h3><ul>
+        <li><a href="register">register</a></li>
+        <li><a href="login">log in</a></li>
+    </ul></h3>
+    <ul>
+        {% endif %}
+       {% for item in all_lists %}
+       <li>{{item.content}}
+       <form action="deleteTask/{{item.id}}" method="post" style="display: inline;">
+            {% csrf_token %}
+           <input type="submit" value="Delete">
+       </form>
+       </li>
+       {% endfor %}
+    </ul>
+    {% if user.is_authenticated %}
+    <form action="addtodo" method="post">
+        {% csrf_token %}
+        <input type="text" name="task" id="">
+        <input type="submit" value="Add">
+    </form>
+    {% endif %}
+
+</body>
+</html>

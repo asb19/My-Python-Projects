@@ -25,7 +25,7 @@ SECRET_KEY = 'rwnq8tq93f59xgk$3&o9_mq8n5fn+b!4uif2^+5g%-w4k$d6vp'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['192.168.43.86','localhost']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -51,16 +51,18 @@ INSTALLED_APPS = [
     'notepad',
     'news',
     'taskapi',
-    'frontend',
-    'weather'
+    'weather',
+    'corsheaders',
+
 ]
 
 MIDDLEWARE = [
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
-    
+
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -71,7 +73,7 @@ ROOT_URLCONF = 'amir.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR,'templates')],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -93,10 +95,11 @@ WSGI_APPLICATION = 'amir.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'amir',
-        'USER':'postgres',
-        'PASSWORD':'1234',
-        'HOST':'localhost'
+        'NAME': 'postgres',
+        'USER': 'postgres',
+        'PASSWORD': 'postgres',
+        'HOST': 'db',
+        'PORT': 5432,
 
     }
 }
@@ -113,7 +116,7 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
     },
     {
-        'NAME': 'django.contr+]2ib.auth.password_validation.CommonPasswordValidator',
+        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
     },
     {
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
@@ -139,17 +142,24 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS=[
-    os.path.join(BASE_DIR,'static')
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static')
 ]
-STATIC_ROOT=os.path.join(BASE_DIR,'assets')
+STATIC_ROOT = os.path.join(BASE_DIR, 'assets')
 
-MEDIA_URL='/media/'
-MEDIA_ROOT=os.path.join(BASE_DIR,'media')
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-CRISPY_TEMPLATE_PACK='bootstrap4'
-LOGIN_REDIRECT_URL='posts'
-LOGIN_URL='login'
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
+LOGIN_REDIRECT_URL = 'posts'
+LOGIN_URL = 'login'
 
-LOGOUT_REDIRECT_URL='posts'
-LOGOUT_URL='login'
+LOGOUT_REDIRECT_URL = 'posts'
+LOGOUT_URL = 'login'
+
+CORS_ORIGIN_WHITELIST = [
+
+    "http://localhost:3000",
+    "http://localhost:4200",
+
+]

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        input{
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+        .form1,.form2{
+            width: 400px;
+            position: relative;
+            float: left;
+            padding: 30px;
+        }
+        .form2{
+            
+            margin-left: 50px;
+            
+        }
+    </style>
+    <script>
+        function left_func(){
+            alert("Left Form Submitted");
+        }
+        function right_func(){
+            alert("Right Form Submitted");
+        }
+    </script>
+</head>
+<body>
+    <div class="form1" style="border: 1px solid;">
+        <form action="">
+            <label for="username">username:</label>
+            <input type="text" name="username" id="">
+            <br>
+            <label for="email">E-mail:</label>
+            <input type="email" name="email" id="">
+            <br>
+            <label for="">Password:</label>
+            <input type="password" name="password" id="">
+            <br>
+            <button type="submit" onclick="left_func()">Submit</button>
+            
+            
+
+        </form>
+    </div>
+    <div class="form2" style="border: 1px solid;">
+        <form action="">
+            <label for="firstName">First Name:</label>
+            <input type="text" name="first_name" id="">
+            <br>
+            <label for="lastName">Last Name:</label>
+            <input type="text" name="last_name" id="">
+            <br>
+            <label for="dob">DOB:</label>
+            <input type="date" name="date_birth" id="">
+            <br>
+            <label for="city">City</label>
+            <input type="text" name="city" id="">
+            <br>
+            <label for="number">Mobile No:</label>
+            <input type="text" name="mobile_no" id="">
+            <br>
+            <input type="radio" name="gender" value="male"> Male<br>
+            <input type="radio" name="gender" value="female"> Female<br>
+            <input type="radio" name="gender" value="other"> Other
+            <br>
+            <label for="emp">Employment Status:</label>
+            <select name="employment" id="">
+                <option value="emp_yes">Employed</option>
+                <option value="emp_stu">Student</option>
+                <option value="emp_other">Others</option>
+            </select>
+            <br>
+            <button type="submit" onclick="right_func()">Submit</button>
+
+
+        </form>
+    </div>
+</body>
+</html>

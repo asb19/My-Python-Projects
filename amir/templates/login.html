@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <form action="" method="post">
+        {% csrf_token %}
+        <input type="text" name="username" id="" placeholder="username">
+        <br>
+        <br>
+        <input type="password" name="password" id="" placeholder="password">
+        <br>
+        <input type="submit" value="log in">
+
+    </form>
+    <div>
+            
+            {% for msg in messages %}
+            <h1>{{msg}}</h1>
+            {% endfor %}
+    </div>
+</body>
+</html>

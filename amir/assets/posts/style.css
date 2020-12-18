@@ -1,0 +1,8 @@
+
+li{
+    color: brown;
+}
+.thumbnail img :hover{
+    transform: scale(2);
+
+}
