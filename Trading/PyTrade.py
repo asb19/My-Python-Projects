@@ -3,13 +3,27 @@ import datetime
 import json
 import sqlite3
 import websocket
+from datetime import datetime
+import pandas as pd
 
-access_token = "BrOCKm1gDRX4TXl8kSkEwafx2SdrYZopFDRYiGbyEaA.0fsIRmgLkDh0Z1bwyn12VcseZOVsmCY_ljT_O_Z2Se4"
+
+
+access_token = "drYaso1oL8fGj74701Jw4NUP149pip92_4-hQKTYFx0.4dxp1T-JRErQd4R30Og0PSecsRYNtHst8VGy3FjJZfs"
 conn = sqlite3.connect('./sqldata/trade-database.db')
 c = conn.cursor()
-c.execute("""CREATE TABLE IF NOT EXISTS trade (EXCHANGE_TIMESTAMP TEXT,LTP REAL)
-""")
+resArray=[]
+def oneMinCandleGenerate(resArray):
 
+
+    df=pd.DataFrame(data=resArray,columns=["EXCHANGE_TIMESTAMP","LTP"])
+    print(df)
+
+    df=df.set_index('EXCHANGE_TIMESTAMP')
+    df.index=pd.DatetimeIndex(df.index)
+    candle=df['LTP'].resample('1min').ohlc()
+    candle.to_sql('OneMinCandle',conn,if_exists='replace',index=True)
+    conn.commit()
+    return
 
 def bytes_to_int(bytedata):
     result = 0
@@ -17,20 +31,49 @@ def bytes_to_int(bytedata):
     for b in bytedata:
         result = result * 256 + int(b)
     return result
-
-
+current_candle_time=0
+open_time=0
 def on_message(wb, message):
     print("received")
     res = list(message)
     # print(res)
-    dt_obj = datetime.datetime.fromtimestamp(bytes_to_int(res[14:18]))
+    # global resArray
+    global current_candle_time
+    candleIs_same=True
+    dt_obj = datetime.fromtimestamp(bytes_to_int(res[14:18]))
+    print(dt_obj)
     seconds=dt_obj.second
-    if bytes_to_int(res[6:10])!=0:
+    if current_candle_time!=0:
+        if dt_obj.minute!=current_candle_time.minute:
+            current_candle_time=dt_obj
+            candleIs_same=False
+    else:
+        current_candle_time=dt_obj
+    if candleIs_same==False:
+        oneMinCandleGenerate(resArray)
+    if bytes_to_int(res[6:10]) != 0:
         merest = [dt_obj, bytes_to_int(res[6:10]) / 100]
-        c.execute("INSERT INTO trade VALUES(?,?)", merest)
-        c.execute("SELECT * FROM trade ORDER BY rowid DESC LIMIT 1;")
-        print(c.fetchone())
-        conn.commit()
+        resArray.append(merest)
+
+
+
+
+
+    # if seconds==0:
+    #     open_time=dt_obj
+    #     print(open_time)
+    # if open_time!=0 and dt_obj!=open_time+datetime.timedelta(seconds=59):
+    #     print("data")
+    #
+    #     if bytes_to_int(res[6:10])!=0:
+    #         merest = [dt_obj, bytes_to_int(res[6:10]) / 100]
+    #         c.execute("INSERT INTO tick VALUES(?,?)", merest)
+    #         c.execute("SELECT * FROM tick ORDER BY rowid DESC LIMIT 1;")
+    #         print(c.fetchone())
+    #         conn.commit()
+    # else:
+    #     oneMinCandleGenerate()
+
 
 
 def on_open(wb):
