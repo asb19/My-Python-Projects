@@ -1,18 +1,47 @@
 from selenium import webdriver
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.by import By
 from bs4 import BeautifulSoup as bs
 import  xlsxwriter
 import json
 import  instaloader
 import re
+from time import sleep
+from getpass import getpass
 
+def login(driver):
+    username = input("enter username: ")  # <username here>
+    password = input("enter password: ")  # <password here>
+
+    # Load page
+    driver.get("https://www.instagram.com/accounts/login/")
+    sleep(3)
+
+    # Login
+    driver.find_element_by_name("username").send_keys(username)
+    driver.find_element_by_name("password").send_keys(password)
+    submit = driver.find_element_by_tag_name('form')
+    submit.submit()
+    driver.implicitly_wait(5)
+
+    # Wait for the user dashboard page to load
+    # WebDriverWait(driver, 15).until(
+    #     EC.presence_of_element_located((By.LINK_TEXT, "See All")))
 # choose hashtag
-hashtag='food'
+
+
 # browser = webdriver.Chrome('c:/webdrivers/chromedriver')
 chrome_options = webdriver.ChromeOptions()
 prefs = {"profile.managed_default_content_settings.images": 2}
 chrome_options.add_experimental_option("prefs", prefs)
 driver = webdriver.Chrome(executable_path="c:/webdrivers/chromedriver",chrome_options=chrome_options)
+login(driver)
+sleep(15)
+
+hashtag= input("enter hashtag:")
 driver.get('https://www.instagram.com/explore/tags/'+hashtag)
+driver.implicitly_wait(3)
 links=[]
 for i in range(3):
     Pagelength = driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
@@ -21,7 +50,7 @@ for i in range(3):
     data=bs(source, 'html.parser')
     body = data.find('body')
     script = body.find('script', text=lambda t: t.startswith('window._sharedData'))
-    page_json = script.text.split(' = ', 1)[1].rstrip(';')
+    page_json = script.string.split(' = ', 1)[1].rstrip(';')
     data = json.loads(page_json)
     for link in data['entry_data']['TagPage'][0]['graphql']['hashtag']['edge_hashtag_to_media']['edges']:
         links.append('https://www.instagram.com'+'/p/'+link['node']['shortcode']+'/')
